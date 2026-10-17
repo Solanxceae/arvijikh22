@@ -41,14 +41,14 @@ a{color:#cbd6ff}
   <h1>Dear Arvijikh, <br><em>Happy 22nd Birthday</em></h1>
   <p class="subtitle">somewhere between the stars, there’s a person I’m really glad exists.</p>
   <button id="openBtn" onclick="revealIntro()">naashir2</button>
-  
   <div id="intro" class="hidden">
     <p class="subtitle">hi, huurhnuu. ene jijigheen yrtuntsiig chamdaa zoriulj buteelee kk ♡</p>
-    <button onclick="show('letter')">zahia unshih</button>
-    <button onclick="show('wishes')">make a wish</button>
-    <button onclick="show('quiz')">a tiny game</button>
-    <button onclick="show('secret')">something secret</button>
-    <button onclick="show('candles')">blow out your candles</button>
+    <button onclick="showSection('letter')">zahia unshih</button>
+    <button onclick="showSection('wishes')">make a wish</button>
+
+    <button onclick="showSection('quiz')">a tiny game</button>
+    <button onclick="showSection('secret')">something secret</button>
+    <button onclick="showSection('candles')">blow out your candles</button>
     <button onclick="toggleMusic()" id="musicBtn">play a little melody ♪</button>
   </div>
 
@@ -67,15 +67,15 @@ a{color:#cbd6ff}
 
 үс нь бууралтаж хөгширсөн ч наддаа эрхэлсээр л байгаарай. 🌙
 — someone who’s intensely, unmistakably fond of you</p>
-    <div class="center"><button onclick="show('intro')">окок</button></div>
+    <div class="center"><button onclick="goBackToMenu()">окок</button></div>
   </section>
 
   <section id="wishes" class="card hidden">
     <h2>энэ дээр би lockin хийсэн шоолох хэрэггүй</h2>
-    <p class="center">од дээр дарангуут миний чамд хүссэн хүслүүд гарж ирнэ.</p>
+    <p class="center">од дээр дарангуут миний чамд хүссэн хүслүүд гарж-[#ийн] гарж ирнэ.</p>
     <div class="stars"><button class="star" onclick="wish(0)">✦</button><button class="star" onclick="wish(1)">✧</button><button class="star" onclick="wish(2)">✦</button></div>
     <p id="wishText" class="message">заюу.</p>
-    <div class="center"><button onclick="show('intro')">back to the universe</button></div>
+    <div class="center"><button onclick="goBackToMenu()">back to the universe</button></div>
   </section>
 
   <section id="quiz" class="card hidden">
@@ -87,16 +87,16 @@ a{color:#cbd6ff}
       <button onclick="quiz(2)">for us to meet soon</button>
     </div>
     <p id="quizResult"></p>
-    <div class="center"><button onclick="show('intro')">back</button></div>
+    <div class="center"><button onclick="goBackToMenu()">back</button></div>
   </section>
 
   <section id="secret" class="card hidden">
     <h2>түлхүүрийг нь олвол нэг айхтар нууц байна</h2>
-    <p class="center">hint: миний дуртай өнгө. (хар эсвэл black)</p>
+    <p class="center">hint: миний дуртай өнгө.</p>
     <input id="password" type="password" placeholder="enter the secret word" autocomplete="off">
     <div class="center"><button onclick="unlock()">unlock message</button></div>
     <p id="secretText" class="message"></p>
-    <div class="center"><button onclick="show('intro')">back</button></div>
+    <div class="center"><button onclick="goBackToMenu()">back</button></div>
   </section>
 
    <section id="candles" class="card hidden">
@@ -104,7 +104,7 @@ a{color:#cbd6ff}
     <p class="center">нэг нэгээр нь дарахаар үлээгдэнэ.</p>
     <div class="candles" id="candleRow"><span style="cursor:pointer;" onclick="blow(this)">🕯️</span><span style="cursor:pointer;" onclick="blow(this)">🕯️</span><span style="cursor:pointer;" onclick="blow(this)">🕯️</span></div>
     <p id="candleText" class="message">3 хүсэл бодоорой</p>
-    <div class="center"><button onclick="resetCandles()">нахиулъя</button><button onclick="show('intro')">ханалаа</button></div>
+    <div class="center"><button onclick="resetCandles()">нахиулъя</button><button onclick="goBackToMenu()">ханалаа</button></div>
   </section>
   <footer>Арвижих baby дээ зориулав· ☾</footer>
 </main>
@@ -115,18 +115,15 @@ function revealIntro(){
     document.getElementById('openBtn').classList.add('hidden');
 }
 
-function show(id){
-    // Hide all card sections first
+function showSection(id){
+    document.getElementById('intro').classList.add('hidden');
     document.querySelectorAll('section.card').forEach(s => s.classList.add('hidden'));
-    
-    if(id === 'intro') {
-        // Just show the intro menu dashboard again
-        document.getElementById('intro').classList.remove('hidden');
-    } else {
-        // Keep the menu dashboard visible, but open the specific card underneath it
-        document.getElementById('intro').classList.remove('hidden');
-        document.getElementById(id).classList.remove('hidden');
-    }
+    document.getElementById(id).classList.remove('hidden');
+}
+
+function goBackToMenu(){
+    document.querySelectorAll('section.card').forEach(s => s.classList.add('hidden'));
+    document.getElementById('intro').classList.remove('hidden');
 }
 
 const wishes = [
@@ -151,6 +148,7 @@ function quiz(i){
 function unlock(){
     const pw = document.getElementById('password').value.trim().toLowerCase();
     const res = document.getElementById('secretText');
+    // Checks for your favorite color in both Mongolian and English natively
     if(pw === 'хар' || pw === 'black'){
         res.innerText = "би чамд үнэхээр их хайртай шүү, миний нандин хүн минь 🖤";
     } else {
