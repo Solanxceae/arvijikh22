@@ -41,11 +41,11 @@ a{color:#cbd6ff}
   <h1>Dear Arvijikh, <br><em>Happy 22nd Birthday</em></h1>
   <p class="subtitle">somewhere between the stars, there’s a person I’m really glad exists.</p>
   <button id="openBtn" onclick="revealIntro()">naashir2</button>
+  
   <div id="intro" class="hidden">
     <p class="subtitle">hi, huurhnuu. ene jijigheen yrtuntsiig chamdaa zoriulj buteelee kk ♡</p>
     <button onclick="show('letter')">zahia unshih</button>
     <button onclick="show('wishes')">make a wish</button>
-
     <button onclick="show('quiz')">a tiny game</button>
     <button onclick="show('secret')">something secret</button>
     <button onclick="show('candles')">blow out your candles</button>
@@ -65,7 +65,7 @@ a{color:#cbd6ff}
 
 Хэлдэггүй л болохоос чамайг дандааааа санаж,хүсэж байдаг шүүүү heheheheh
 
-үс нь бууралтаж хөгширсөн % наддаа эрхэлсээр л байгаарай. 🌙
+үс нь бууралтаж хөгширсөн ч наддаа эрхэлсээр л байгаарай. 🌙
 — someone who’s intensely, unmistakably fond of you</p>
     <div class="center"><button onclick="show('intro')">окок</button></div>
   </section>
@@ -116,8 +116,15 @@ function revealIntro(){
 }
 
 function show(id){
+    // Hide all card sections first
     document.querySelectorAll('section.card').forEach(s => s.classList.add('hidden'));
-    if(id !== 'intro') {
+    
+    if(id === 'intro') {
+        // Just show the intro menu dashboard again
+        document.getElementById('intro').classList.remove('hidden');
+    } else {
+        // Keep the menu dashboard visible, but open the specific card underneath it
+        document.getElementById('intro').classList.remove('hidden');
         document.getElementById(id).classList.remove('hidden');
     }
 }
@@ -153,7 +160,7 @@ function unlock(){
 
 function blow(el){
     el.innerText = "✨";
-    el.style.pointerEvents = "none"; // prevents clicking the same blown candle
+    el.style.pointerEvents = "none";
     const row = document.getElementById('candleRow');
     if(!row.innerText.includes("🕯️")){
         document.getElementById('candleText').innerText = "Happy Birthday! 🎂✨ Бүх хүсэл чинь биелэх болтугай!";
@@ -167,8 +174,3 @@ function resetCandles(){
 
 let audio = null;
 function toggleMusic(){
-    const btn = document.getElementById('musicBtn');
-    if(!audio){
-        // You can swap this link with your own favorite low-fi or romantic background mp3 track link!
-        audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
-        audio.loop = true;
